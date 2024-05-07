@@ -191,7 +191,7 @@ def create_summary():
     #print(threshold)
 
     # 9 Important Algorithm: Generate the summary
-    summary = _generate_summary(sentences, sentence_scores, 1.3 * threshold)
+    summary = _generate_summary(sentences, sentence_scores, 1.1 * threshold)
 
     summary_data = {
         "summary":summary
