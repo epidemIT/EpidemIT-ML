@@ -34,4 +34,6 @@ export async function POST(request: Request) {
       "Content-Type": "audio/mpeg",
     },
   });
+  // status: 200
+  // return NextResponse.json({ audioData }, { headers: { "Content-Type": "audio/mpeg" }, status: 200 });
 }
