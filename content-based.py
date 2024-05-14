@@ -51,7 +51,7 @@ from flask_cors import CORS
 app = Flask(__name__)
 CORS(app)
 
-@app.route("/api/summary", methods=["POST"])
+@app.route("/api/recommend", methods=["POST"])
 def create_summary():
 
     data = request.get_json()
