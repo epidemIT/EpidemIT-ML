@@ -1,0 +1,9 @@
+Flask
+keras
+matplotlib
+numpy
+pandas
+python-dotenv
+scikit-learn
+tensorflow
+scikit-learn
