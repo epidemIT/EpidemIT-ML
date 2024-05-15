@@ -15,33 +15,31 @@ from sklearn.metrics.pairwise import linear_kernel
 
 def get_recommendations(title):
     data_path = '.'
-    courses = pd.read_csv(f"{data_path}/courses.csv")
+    courses = pd.read_csv(f"{data_path}/data.csv")
     tfidf = TfidfVectorizer(stop_words='english')
-    courses['course_learn'] = courses['course_learn'].fillna('')
-    tfidf_matrix = tfidf.fit_transform(courses['course_learn'])
+    courses['overview'] = courses['overview'].fillna('')
+    tfidf_matrix = tfidf.fit_transform(courses['overview'])
     cosine_sim = linear_kernel(tfidf_matrix, tfidf_matrix)
 
-    indices = pd.Series(courses.index, index=courses['course_title']).drop_duplicates()
+    indices = pd.Series(courses.index, index=courses['name']).drop_duplicates()
     idx = indices[title]
 
     sim_scores = list(enumerate(cosine_sim[idx]))
 
     sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)
 
-    sim_scores = sim_scores[1:6]
+    sim_scores = sim_scores[1:4]
 
     movie_indices = [i[0] for i in sim_scores]
 
-    recom = courses['course_title'].iloc[movie_indices]
+    recom = courses['name'].iloc[movie_indices]
 
-    recom = courses['course_title'].iloc[movie_indices]
+    recom = courses['name'].iloc[movie_indices]
     course_recom_1 = recom.iloc[0]
     course_recom_2 = recom.iloc[1]
     course_recom_3 = recom.iloc[2]
-    course_recom_4 = recom.iloc[3]
-    course_recom_5 = recom.iloc[4]
 
-    return course_recom_1, course_recom_2, course_recom_3, course_recom_4, course_recom_5
+    return course_recom_1, course_recom_2, course_recom_3
 
 
 from flask import Flask, request
@@ -60,13 +58,11 @@ def create_summary():
         return {"error": "Input is required"}, 400
 
 
-    rec_1, rec_2, rec_3, rec_4, rec_5 = get_recommendations(input)
+    rec_1, rec_2, rec_3 = get_recommendations(input)
     summary_data = {
         "rec_1":rec_1,
         "rec_2":rec_2,
         "rec_3":rec_3,
-        "rec_4":rec_4,
-        "rec_5":rec_5,
     }
     return summary_data, 201
 
